@@ -1,0 +1,1 @@
+# ansible-host-based-ssh-role
