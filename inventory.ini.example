@@ -1,0 +1,8 @@
+[server]
+ssh.server.who.receive.connections
+
+[client]
+ssh.client.who.connects
+
+[client:vars]
+allowed_domain=domain.com

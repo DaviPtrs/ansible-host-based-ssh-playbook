@@ -1,0 +1,11 @@
+{% for host in groups['all'] %}
+{% if hostvars[host].ansible_ssh_host_key_ed25519_public %}
+{{ host }} ssh-ed25519 {{ hostvars[host].ansible_ssh_host_key_ed25519_public }}
+{{ hostvars[host].ipify_public_ip }} ssh-ed25519 {{ hostvars[host].ansible_ssh_host_key_ed25519_public }}
+{{ hostvars[host].ansible_fqdn }} ssh-ed25519 {{ hostvars[host].ansible_ssh_host_key_ed25519_public }}
+{% if hostvars[host].ansible_dns.search|length > 0 %}
+{{ hostvars[host].internal_name }} ssh-ed25519 {{ hostvars[host].ansible_ssh_host_key_ed25519_public }}
+{% endif %}
+{{ hostvars[host].ansible_default_ipv4.address }} ssh-ed25519 {{ hostvars[host].ansible_ssh_host_key_ed25519_public }}
+{% endif %}
+{% endfor %}

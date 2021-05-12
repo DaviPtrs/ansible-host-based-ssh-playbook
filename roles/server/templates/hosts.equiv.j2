@@ -1,0 +1,16 @@
+{% for host in groups['client'] %}
+{% if hostvars[host].ansible_ssh_host_key_ed25519_public %}
+{{ host }} ubuntu
+{{ host }} root
+{{ hostvars[host].ipify_public_ip }} ubuntu
+{{ hostvars[host].ipify_public_ip }} root
+{{ hostvars[host].ansible_fqdn }} ubuntu
+{{ hostvars[host].ansible_fqdn }} root
+{% if hostvars[host].ansible_dns.search|length > 0 %}
+{{ hostvars[host].internal_name }} ubuntu
+{{ hostvars[host].internal_name }} root
+{% endif %}
+{{ hostvars[host].ansible_default_ipv4.address }} ubuntu
+{{ hostvars[host].ansible_default_ipv4.address }} root
+{% endif %}
+{% endfor %}

@@ -1,0 +1,21 @@
+---
+- name: Common configs
+  hosts: all
+  become: True
+  remote_user: ubuntu
+  roles:
+    - common
+
+- name: Server-only configs
+  hosts: server
+  become: True
+  remote_user: ubuntu
+  roles:
+    - server
+    
+- name: Client-only configs
+  hosts: client
+  become: True
+  remote_user: ubuntu
+  roles:
+    - client

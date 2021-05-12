@@ -1,0 +1,35 @@
+---
+- name: Set internal DNS name
+  set_fact: 
+    internal_name: "ip-{{ hostvars[inventory_hostname].ansible_default_ipv4.address|replace('.', '-') }}.{{ hostvars[inventory_hostname].ansible_dns.search[0]}}"
+
+- name: Get my public IP
+  community.general.ipify_facts:
+
+- name: Apply hosts.equiv template
+  template: 
+    src: hosts.equiv.j2
+    dest: /etc/hosts.equiv
+
+- name: Enable HostbasedAuthentication on sshd_config
+  lineinfile: 
+    path: /etc/ssh/sshd_config 
+    regexp: 'HostbasedAuthentication.*'
+    line: "HostbasedAuthentication yes"
+    state: present
+
+- name: Verify SSH config
+  command: sshd -t
+  changed_when: false
+
+- name: Restart SSH server
+  service:
+    name: ssh
+    state: restarted
+  ignore_errors: True
+  register: ssh_restart
+
+- name: Restart SSH server using command
+  command: service ssh restart
+  when: ssh_restart.failed is true
+

@@ -1,0 +1,8 @@
+---
+- name: Adding Host block to /etc/ssh/ssh_config
+  blockinfile:
+    path: /etc/ssh/ssh_config
+    block: |
+      Host *.{{ allowed_domain }}
+        HostbasedAuthentication yes
+
