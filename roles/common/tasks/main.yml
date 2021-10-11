@@ -5,6 +5,7 @@
 
 - name: Get my public IP
   community.general.ipify_facts:
+    timeout: 60
 
 - name: Apply known_hosts template
   template:
